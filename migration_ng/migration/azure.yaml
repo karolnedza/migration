@@ -1,0 +1,49 @@
+aws:
+  s3: 
+    account: "955315316192"  
+    role_name: "aviatrix-discovery-Nike"
+    name: "piotr-aviatrix-discovery-migration"
+    region: "us-west-2"
+terraform:
+  terraform_output: "/home/bednarsk/Nike-migration/migration/discovery_output"
+  terraform_version: ">= 0.14"
+  aviatrix_provider: "= 2.19.5"
+  aws_provider: "~> 3.43.0"
+  arm_provider: "~> 2.46.0"
+  azurerm:
+    - arm_subscription_id: "6f1b55d5-4e5a-4166-8175-cfc4d58d2515"
+      arm_directory_id: "4780055e-ce37-4f02-b33d-fdad8493a4b6"
+      arm_application_id: "b6e09b37-b6cf-49ee-a42f-dcf3946974c1"
+      arm_application_secret_data_src: "data.aws_ssm_parameter.avx-azure-client-secret.value"
+      arm_application_secret_env: "ARM_CLIENT_SECRET"
+      alias: "aviatrix"
+  aviatrix_account:
+    arm_subscription_id: "6f1b55d5-4e5a-4166-8175-cfc4d58d2515"
+    arm_directory_id: "e299a644-a20f-492e-8471-57a29cac90c5"
+    arm_application_id: "f9ac510a-b663-46f1-8b82-05b4544fbe76"
+    arm_application_secret_data_src: "data.aws_ssm_parameter.avx-azure-client-secret.value"
+    account_name: "az-sandbox-01"
+aviatrix:
+  controller_ip: "35.81.225.204"
+  controller_private_ip: "10.240.68.141"
+alert:
+  vnet_name_length: 31
+  vnet_peering: True
+config:
+  route_table_tags:
+    - key: 'Aviatrix-Created-Resource'
+      value: 'Do-Not-Delete-Aviatrix-Created-Resource'
+account_info:
+  - subscription_id: '6f1b55d5-4e5a-4166-8175-cfc4d58d2515'
+    vpcs:
+      - vnet_name: no-azs-region
+        gw_zones: 
+        avtx_cidr: "192.168.102.0/25"
+        use_azs: False
+      #- vnet_name: second-level-vnet
+       # gw_zones: ["1", "2"]
+       # avtx_cidr: "192.168.103.0/25"
+       # transit_name: "aws-use-transit-gw"
+    spoke_gw_size: "Standard_D8_v3"
+    filter_cidrs: ["146.197.0.0/16"]
+    hpe: True

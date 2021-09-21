@@ -1,0 +1,35 @@
+account_info:
+  - account_id: '2377690'
+    acc_name: 1-avx
+    role_name: aviatrix-role-app
+    aws_region: us-east-1
+    vpcs:
+      - vpc-0de4be69
+    spoke_routes: ["10.0.0.0/8","172.16.0.0/12"]
+    managed_tgw: False
+    transit_gw: va-transit
+    diy_tgw_id: tgw-0d6372873f0a
+    diy_tgw_account :
+    avtx_transit: True
+    spoke_gw_name: va1-spk-gw
+    spoke_gw_size: t3.medium
+    insane_mode: False
+    insane_az1: []
+    insane_az2: []
+  - account_id: '2377690'
+    acc_name: 2-avx
+    role_name: aviatrix-role-app
+    aws_region: us-east-1
+    vpcs:
+      - vpc-0e458a4c5
+    spoke_routes: ["10.0.0.0/8","172.16.0.0/12"]
+    managed_tgw: False
+    transit_gw: va-transit
+    diy_tgw_id: tgw-0d6373f0a
+    diy_tgw_account :
+    avtx_transit: True
+    spoke_gw_name: va2-spk-gw
+    spoke_gw_size: c5n.xlarge
+    insane_mode: True
+    insane_az1: ["10.1.2.128/26","c"]
+    insane_az2: ["10.1.2.192/26","d"]

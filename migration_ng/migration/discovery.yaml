@@ -1,0 +1,61 @@
+aws:
+  s3:
+    account: "955315316192"  
+    role_name: "aviatrix-discovery-Nike"
+    name: "piotr-aviatrix-discovery-migration"
+    region: "us-west-2"
+terraform:
+  terraform_output: "/home/bednarsk/Nike-migration/migration/discovery_output"
+  terraform_version: ">= 0.14"
+  aviatrix_provider: "= 2.19.5"
+  aws_provider: "~> 3.43.0"
+  enable_s3_backend: True
+aviatrix:
+  controller_ip: "35.81.225.204"
+  controller_account: "955315316192"
+  ctrl_role_app: "Networking.AviatrixService"            # Controller app role name in the SPOKE account
+  ctrl_role_ec2: "Networking.AviatrixController"         # controller EC2 role name in the CONTROLLER account
+  gateway_role_app: "Networking.AviatrixGateway"         # SPOKE account
+  gateway_role_ec2: "Networking.AviatrixInstanceProfile" # SPOKE account
+alert:
+  expect_dest_cidrs: ["146.197.0.0/16", "100.127.0.0/25", "100.64.0.0/25"]
+  expect_vpc_prefixes: ["10.0.0.0/8", "100.127.0.0/25", "100.64.0.0/25"]
+config:
+  filter_tgw_attachment_subnet: True
+  spoke_gw_name_format: "HEX_CIDR"     # HEX_CIDR or VPC_NAME
+  allow_vpc_cidrs: ["10.0.0.0/8"]
+  subnet_tags:
+    - key: 'Networking-Created-Resource'
+      value: 'Do-Not-Delete-Networking-Created-Resource'
+  route_table_tags:
+    - key: 'Aviatrix-Created-Resource'
+      value: 'Do-Not-Delete-Aviatrix-Created-Resource'
+tgw:
+  tgw_account: "347477146224"
+  tgw_role: "aviatrix-discovery-Nike"
+  tgw_by_region:
+    us-east-1: "tgw-04067720ba42d1f13"
+    us-west-2: "tgw-0011223374c528899"
+account_info:
+  - account_id: "347477146224"
+    role_name: "aviatrix-discovery-Nike"
+    spoke_gw_size: "t3.small"
+    filter_cidrs: ["146.197.0.0/16"]
+    hpe: True
+    regions:
+      - region: "us-east-1"
+        vpcs:
+          - vpc_id: "vpc-0f12325c153807493"
+            gw_zones: ["b","c"]  
+            avtx_cidr: "10.1.0.0/25"
+          - vpc_id: "vpc-0b622852b31c1662e"
+            gw_zones:
+            avtx_cidr: "10.2.0.0/25"
+          - vpc_id: "vpc-01f793f283fd3951c"
+            gw_zones:
+            avtx_cidr: "10.3.0.0/25"
+switch_traffic:
+  delete_tgw_route_delay: 5
+cleanup:
+  vpc_cidrs: ["100.64.0.0/25","100.127.0.0/25"]
+  resources: ["VGW"]

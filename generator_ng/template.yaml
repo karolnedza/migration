@@ -1,0 +1,42 @@
+aws:
+  s3:
+    account: "012345678900"
+    role_name: aviatrix-migration-s3-role
+    name: avx-demo-lab01
+    region: us-west-2
+terraform:
+  terraform_output: "/home/ec2-user/demo/migration-ng/discovery_output"
+  terraform_version: ">= 0.14"
+  aviatrix_provider: "= 2.19.5"
+  aws_provider: "~> 3.43.0"
+  enable_s3_backend: False
+aviatrix:
+  controller_ip: "1.1.1.1"
+  controller_account: "012345678900"
+  ctrl_role_app: "aviatrix-role-app"            # Controller app role name in the SPOKE account
+  ctrl_role_ec2: "aviatrix-role-ec2"            # controller EC2 role name in the CONTROLLER account
+  gateway_role_app: "aviatrix-role-app"         # SPOKE account
+  gateway_role_ec2: "aviatrix-role-ec2"         # SPOKE account
+alert:
+  expect_dest_cidrs: ["150.0.0.0/28", "100.64.0.0/25"]
+  expect_vpc_prefixes: ["10.0.0.0/8", "100.64.0.0/22"]
+config:
+  filter_tgw_attachment_subnet: True 
+  spoke_gw_name_format: "VPC_NAME"     # HEX_CIDR or VPC_NAME
+  allow_vpc_cidrs: ["10.0.0.0/8", "100.64.198.128/26"]
+  subnet_tags:
+    - key: "Networking-Created-Resource"
+      value: "Do-Not-Delete-Networking-Created-Resource"
+  route_table_tags:
+    - key: "Aviatrix-Created-Resource"
+      value: "Do-Not-Delete-Aviatrix-Created-Resource"
+switch_traffic:
+  delete_tgw_route_delay: 5
+cleanup:
+  remove_cidr: ["100.64.0.0/16"]
+  resources: []
+tgw:
+  tgw_account: "012345678900"
+  tgw_role: "aviatrix-role-app"
+  tgw_by_region:
+    us-east-1: "tgw-04fb5580fd8d277ce"

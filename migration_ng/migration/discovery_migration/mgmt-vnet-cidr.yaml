@@ -1,0 +1,24 @@
+# 1. To add cidrs specified in yaml: python -m dm.arm.mgmt_vnet_cidr cidr.yaml
+# 2. To delete cidrs:  python -m dm.arm.mgmt_vnet_cidr cidr.yaml --delete
+# 3. To add cidrs without restoring peering: python -m dm.arm.mgmt_vnet_cidr cidr.yaml --deletePeering
+# 4. To delete cidrs without restoring peering: python -m dm.arm.mgmt_vnet_cidr cidr.yaml --delete --deletePeering
+# 
+# The following example shows the structure of two different subscriptions.  The vnets attribute is an 
+# object of multiple vnet_name to cidrs pairs.  Only one is shown in this case.
+#
+label: "MGMT_VNET_CIDR"
+log_output: "/home/<userId>/migration/output"
+vnet_cidr:
+  - arm_subscription_id: "23241dsae-16d2-4d23-8635-1edd1289473ec9"
+    arm_directory_id: "ab46df99a-9006-4ee8-bffb-abcc616faed8e"
+    arm_application_id: "8de8519d-04cc-4e33-b435-79e9e478d8dd"
+    arm_application_secret_env: "ARM_CLIENT_SECRET"
+    vnets:
+      vn_firenet-test_VPC1-US-East: "12.1.1.0/24,14.1.1.0/24"
+  - arm_subscription_id: "23241dsae-16d2-4d23-8635-1edd1289473ec9"
+    arm_directory_id: "ab46df99a-9006-4ee8-bffb-abcc616faed8e"
+    arm_application_id: "8de8519d-04cc-4e33-b435-79e9e478d8dd"
+    arm_application_secret_env: "ARM_CLIENT_SECRET"
+    vnets:
+      vn_firenet-test_VPC2-US-East: "13.1.1.0/24"
+

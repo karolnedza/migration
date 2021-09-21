@@ -1,0 +1,18 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [{
+			"Action": [
+				"sts:AssumeRole"
+			],
+			"Resource": "arn:aws:iam::*:role/${app_role_name}",
+			"Effect": "Allow"
+		},
+		{
+			"Action": [
+				"aws-marketplace:MeterUsage"
+			],
+			"Resource": "*",
+			"Effect": "Allow"
+		}
+	]
+}

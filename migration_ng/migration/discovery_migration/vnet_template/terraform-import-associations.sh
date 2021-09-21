@@ -1,0 +1,1 @@
+terraform import azurerm_subnet_route_table_association.$rname $subnet_id

@@ -1,0 +1,22 @@
+account_id:
+  - 012345678900
+  - 123456789000
+
+# If aws_region is not specified, the script will look at all regions
+aws_region:
+  - us-east-1
+  - us-west-2
+
+controller:
+  ip: 1.1.1.1
+  username: admin
+
+defaults:
+  role_name: aviatrix-role-app
+  managed_tgw: True
+  avtx_transit: True
+  spoke_gw_size: t3.small
+  hpe: True
+  hpe_az1: "a"
+  hpe_az2: "b"
+  gw_zones: '["a","b"]'

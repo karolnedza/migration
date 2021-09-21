@@ -1,0 +1,55 @@
+aws:
+  s3:
+    account: "955315316192"  
+    role_name: "aviatrix-role-app"
+    name: "aviatrix-discovery-migration"
+    region: "us-east-1"
+terraform:
+  terraform_output: "/home/bednarsk/Nike-migration/migration/discovery_output"
+  terraform_version: ">= 0.14"
+  aviatrix_provider: "= 2.19.1"
+  aws_provider: "~> 3.43.0"
+  enable_s3_backend: True
+aviatrix:
+  controller_ip: "35.81.225.204"
+  controller_account: "955315316192"
+  ctrl_role_app: "Networking.AviatrixService"            # Comtroller app role name in the SPOKE account
+  ctrl_role_ec2: "Networking.AviatrixController"         # controller EC2 role name in the CONTROLLER account
+  gateway_role_app: "Networking.AviatrixGateway"         # SPOKE account
+  gateway_role_ec2: "Networking.AviatrixInstanceProfile" # SPOKE account
+alert:
+  expect_dest_cidrs: ["146.197.0.0/16", "100.127.0.0/25", "100.64.0.0/25"]
+  expect_vpc_prefixes: ["10.0.0.0/8", "100.127.0.0/16", "100.164.0.0/16"]
+config:
+  filter_tgw_attachment_subnet: True
+  spoke_gw_name_format: "HEX_CIDR"     # HEX_CIDR or VPC_NAME
+  allow_vpc_cidrs: ["10.0.0.0/8"]
+  subnet_tags:
+    - key: 'Networking-Created-Resource'
+      value: 'Do-Not-Delete-Networking-Created-Resource'
+  route_table_tags:
+    - key: 'Aviatrix-Created-Resource'
+      value: 'Do-Not-Delete-Aviatrix-Created-Resource'
+tgw:
+  tgw_account: "777456789012"
+  tgw_role: "aviatrix-role-abc"
+  tgw_by_region:
+    us-east-1: "tgw-0068b1e974c52dc88"
+    us-east-2: "tgw-0011223374c528899"
+account_info:
+  - account_id: "347477146224"
+    role_name: "aviatrix-discovery-xyz"
+    spoke_gw_size: "t3.small"
+    filter_cidrs: ["146.197.0.0/16"]
+    hpe: True
+    regions:
+      - region: "us-east-2"
+        vpcs:
+          - vpc_id: "vpc-0626ed9a07f9eec7e"
+            gw_zones: ["b","c"]  
+            avtx_cidr: "10.101.0.0/16"
+switch_traffic:
+  delete_tgw_route_delay: 5
+cleanup:
+  vpc_cidrs: ["10.11.0.0/23", "100.64.1.0/26"]
+  resources: ["VGW"]

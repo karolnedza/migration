@@ -1,0 +1,1 @@
+terraform import aws_route_table_association.$rname $subnet_id/$route_table_id
